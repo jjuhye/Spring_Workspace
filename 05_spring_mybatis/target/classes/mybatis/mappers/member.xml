@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap type="member" id="memResult">
+		<!-- property(DTO), column(DB) -->
+		<result property="num" 		column="num" />
+		<result property="pw" 		column="pw" />
+		<result property="name" 	column="name" />
+		<result property="email" 	column="email" />
+	</resultMap>
+
+	<select id="selectAllMemberList" resultMap="memResult">
+		<![CDATA[
+			SELECT * FROM member;
+		]]>
+	</select>
+
+	<insert id="insertMember" parameterType="member">
+		<!-- memberVO 속성 이름에 지정된 값을 value로 설정한다. -->
+		<![CDATA[
+			INSERT INTO member ( id, pw, email)
+			VALUES(#{id}, #{pw}, #{email})	
+		]]>
+	</insert>
+
+	<select id="checkMember" parameterType="member" resultType="member">
+		<![CDATA[
+			SELECT * FROM member
+			WHERE
+			id=#{id} AND pw=#{pw}
+		]]>
+	</select>
+
+	<!-- 회원 ID는 문자열이므로 parameterType을 String으로 설정한다. -->
+	<delete id="deleteMember" parameterType="String">
+		<![CDATA[
+			DELETE FROM member
+			WHERE
+			id=#{id}
+		]]>
+	</delete>
+
+	<select id="getMemberInfo" parameterType="String" resultType="member">
+		<![CDATA[
+			SELECT * FROM member
+			WHERE
+			id=#{id}
+		]]>
+	</select>
+
+	<update id="updateMember" parameterType="member">
+		<![CDATA[
+			UPDATE member SET 		
+			pw=#{pw} , email=#{email}
+	        where id=#{id}
+		]]>
+
+
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
