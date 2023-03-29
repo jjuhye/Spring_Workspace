@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<resultMap type="board" id="boardResult">
+		<!-- property(DTO), column(DB) -->
+		<result property="num" 			column="num" />
+		<result property="writer" 		column="writer" />
+		<result property="email" 		column="email" />
+		<result property="subject" 		column="subject" />
+		<result property="password" 	column="password" />
+		<result property="reg_date" 	column="reg_date" />
+		<result property="ref" 			column="ref" />
+		<result property="re_step" 		column="re_step" />
+		<result property="re_level" 	column="re_level" />
+		<result property="readcount" 	column="readcount" />
+		<result property="content" 		column="content" />
+	</resultMap>
+
+	<select id="selectAllBoardList" resultMap="boardResult">
+		<![CDATA[
+			SELECT * FROM board;
+		]]>
+	</select>
+
+	<select id="getBoardInfo" parameterType="int" resultType="board">
+		<![CDATA[
+			SELECT * FROM board
+			WHERE
+			num=#{num}
+			UPDATE member SET readcount=readcount+1 where num=#{num}
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		<!-- boardVO 속성 이름에 지정된 값을 value로 설정한다. -->
+		<![CDATA[
+			INSERT INTO board ( writer, subject, email, password, content, reg_date)
+			VALUES(#{writer}, #{subject}, #{email}, #{password}, #{content}, now())	
+		]]>
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			delete from board where num=#{num}
+		]]>
+	</delete>
+	
+<!-- 	<update id="updateCount" parameterType="int">
+	<![CDATA[
+		UPDATE member SET 		
+		readcount=#{count}
+        where num=#{num}
+	]]> -->
+	
+	<!-- <select id="checkMember" parameterType="member" resultType="member">
+		<![CDATA[
+			SELECT * FROM member
+			WHERE
+			id=#{id} AND pw=#{pw}
+		]]>
+	</select>
+
+	<update id="updateMember" parameterType="member">
+		<![CDATA[
+			UPDATE member SET 		
+			pw=#{pw} , email=#{email}
+	        where id=#{id}
+		]]>
+		
+
+
+
+	</update> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
